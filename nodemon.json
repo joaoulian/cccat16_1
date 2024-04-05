@@ -1,0 +1,7 @@
+{
+  "watch": ["src"],
+  "verbose": true,
+  "ext": ".ts,.js",
+  "ignore": [],
+  "exec": "ts-node ./src/api.ts"
+}
