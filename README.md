@@ -2,6 +2,28 @@ Este conteúdo é parte do curso Clean Code e Clean Architecture da Branas.io
 Para mais informações acesse:
 https://branas.io
 
+## Requisitos
+
+- nvm
+- node (20.9.0)
+- yarn
+- postgres
+- docker
+
+## Setup
+
+- Use a versão correta do node
+
+```
+nvm use
+```
+
+- Instale os pacotes
+
+```
+yarn install
+```
+
 ## Rodar os testes
 
 - Inicie o docker-compose contendo o banco de dados (Postgres)
