@@ -1,4 +1,4 @@
-import { isValidCarPlate } from "../src/is-valid-car-plate";
+import { isValidCarPlate } from "./is-valid-car-plate";
 
 test.each(["ABC1234", "AAA1111", "AAA0000"])(
   "Deve testar uma placa válida: %s",

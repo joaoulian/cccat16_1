@@ -7,7 +7,7 @@ import {
   mockInvalidName,
   mockValidDriver,
   mockValidPassenger,
-} from "./account.mock";
+} from "./modules/identity/domain/account.mock";
 
 axios.defaults.validateStatus = function () {
   return true;

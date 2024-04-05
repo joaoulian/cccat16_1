@@ -1,4 +1,4 @@
-import { isValidEmail } from "../src/is-valid-email";
+import { isValidEmail } from "./is-valid-email";
 
 test.each(["joao@domain.com", "joao@domain.com.br", "joao@domain.gov.br"])(
   "Deve testar um email válido: %s",
