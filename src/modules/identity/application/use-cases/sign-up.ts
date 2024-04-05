@@ -1,10 +1,9 @@
 import crypto from "crypto";
-import pg from "pg-promise/typescript/pg-subset";
-import pgp from "pg-promise";
-import { isValidCPF } from "../domain/is-valid-cpf";
-import { isValidName } from "../domain/is-valid-name";
-import { isValidEmail } from "../domain/is-valid-email";
-import { isValidCarPlate } from "../domain/is-valid-car-plate";
+import { isValidCPF } from "../../domain/is-valid-cpf";
+import { isValidName } from "../../domain/is-valid-name";
+import { isValidEmail } from "../../domain/is-valid-email";
+import { isValidCarPlate } from "../../domain/is-valid-car-plate";
+import { AccountRepository } from "../repositories/AccountRepository";
 
 export interface SignUpRequest {
   name: string;
@@ -20,7 +19,7 @@ export interface SignUpResponse {
 }
 
 export class SignUp {
-  constructor(private readonly connection: pgp.IDatabase<{}, pg.IClient>) {}
+  constructor(private readonly accountRepository: AccountRepository) {}
 
   async execute({
     cpf,
@@ -30,9 +29,8 @@ export class SignUp {
     isDriver,
     isPassenger,
   }: SignUpRequest): Promise<SignUpResponse> {
-    const [accountWithSameEmail] = await this.connection.query(
-      "select * from cccat16.account where email = $1",
-      [email]
+    const accountWithSameEmail = await this.accountRepository.findByEmail(
+      email
     );
     if (!!accountWithSameEmail) throw new AccountAlreadyExistsError();
     if (!isValidName(name)) throw new InvalidNameError();
@@ -70,10 +68,15 @@ export class SignUp {
     carPlate: string | null;
     isPassenger: boolean;
   }) {
-    await this.connection.query(
-      "insert into cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)",
-      [id, name, email, cpf, carPlate, isPassenger, isDriver]
-    );
+    await this.accountRepository.create({
+      id,
+      name,
+      email,
+      cpf,
+      carPlate,
+      isDriver,
+      isPassenger,
+    });
   }
 }
 

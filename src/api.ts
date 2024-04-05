@@ -7,7 +7,8 @@ import {
   InvalidEmailError,
   InvalidNameError,
   SignUp,
-} from "./modules/identity/use-cases/sign-up";
+} from "./modules/identity/application/use-cases/sign-up";
+import { AccountRepositoryImpl } from "./modules/identity/application/repositories/implementations/AccountRepositoryImpl";
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,8 @@ app.use(express.json());
 app.post("/signup", async function (req, res) {
   const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
   try {
-    const useCase = new SignUp(connection);
+    const accountRepository = new AccountRepositoryImpl(connection);
+    const useCase = new SignUp(accountRepository);
     const response = await useCase.execute(req.body);
     return res.json(response);
   } catch (error: any) {
