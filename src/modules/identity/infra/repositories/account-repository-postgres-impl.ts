@@ -30,4 +30,13 @@ export class AccountRepositoryPostgresImpl implements AccountRepository {
     const account = result?.at(0);
     return account ? AccountMapper.toDomain(account) : null;
   }
+
+  async findById(id: string): Promise<Account | null> {
+    const result = await this.connection.query(
+      "select * from cccat16.account where account_id = $1",
+      [id]
+    );
+    const account = result?.at(0);
+    return account ? AccountMapper.toDomain(account) : null;
+  }
 }

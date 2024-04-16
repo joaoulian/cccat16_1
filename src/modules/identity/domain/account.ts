@@ -22,7 +22,7 @@ export class Account {
     if (!isValidCPF(props.cpf)) throw new InvalidCPFError();
     if (!!props.isDriver && !isValidCarPlate(props.carPlate ?? undefined))
       throw new InvalidCarPlateError();
-    this.props = props;
+    this.props = { ...props };
   }
 
   get id(): string {
