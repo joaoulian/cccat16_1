@@ -3,5 +3,5 @@
   "verbose": true,
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "ts-node ./src/api.ts"
+  "exec": "ts-node ./src/main-api.ts"
 }

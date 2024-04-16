@@ -1,8 +1,8 @@
-import { Account } from "../../../domain/account";
+import { Account } from "../../domain/account";
 
 export class AccountMapper {
   static toDomain(account: any): Account {
-    return {
+    return Account.restore({
       id: account.account_id,
       email: account.email,
       name: account.name,
@@ -10,6 +10,6 @@ export class AccountMapper {
       isPassenger: account.is_passenger ?? false,
       carPlate: account.car_plate,
       cpf: account.cpf,
-    };
+    });
   }
 }

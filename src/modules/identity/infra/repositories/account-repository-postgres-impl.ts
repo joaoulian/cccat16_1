@@ -1,10 +1,10 @@
-import { AccountRepository } from "../AccountRepository";
+import { AccountRepository } from "../../application/repositories/account-repository";
 import pg from "pg-promise/typescript/pg-subset";
 import pgp from "pg-promise";
-import { Account } from "../../../domain/account";
-import { AccountMapper } from "./AccountMapper";
+import { Account } from "../../domain/account";
+import { AccountMapper } from "./account-mapper";
 
-export class AccountRepositoryImpl implements AccountRepository {
+export class AccountRepositoryPostgresImpl implements AccountRepository {
   constructor(private readonly connection: pgp.IDatabase<{}, pg.IClient>) {}
 
   async create(account: Account) {
