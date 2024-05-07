@@ -67,6 +67,11 @@ export class Ride {
     this.props.status = "accepted";
   }
 
+  start() {
+    if (!this.isAccepted()) throw new Error("Ride not accepted");
+    this.props.status = "in-progress";
+  }
+
   static create(props: CreateProps): Ride {
     const segment = new Segment(
       new Coord(props.fromLat, props.fromLong),

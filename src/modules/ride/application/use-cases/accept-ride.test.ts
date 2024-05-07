@@ -1,4 +1,3 @@
-import { AcceptRideInput } from "./accept-ride";
 import { Fixture } from "./fixture.mock";
 
 describe("Accept Ride", () => {

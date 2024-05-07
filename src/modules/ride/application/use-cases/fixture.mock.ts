@@ -6,6 +6,7 @@ import { RideRepositoryMemoryImpl } from "../../infra/repositories/ride-reposito
 import { AcceptRide, AcceptRideInput } from "./accept-ride";
 import { GetRide, GetRideInput } from "./get-ride";
 import { RequestRide, RequestRideInput } from "./request-ride";
+import { StartRide, StartRideInput } from "./start-ride";
 
 export class Fixture {
   rideRepository: RideRepositoryMemoryImpl;
@@ -31,6 +32,11 @@ export class Fixture {
 
   acceptRide(input: AcceptRideInput) {
     const useCase = new AcceptRide(this.rideRepository, this.accountRepository);
+    return useCase.execute(input);
+  }
+
+  startRide(input: StartRideInput) {
+    const useCase = new StartRide(this.rideRepository);
     return useCase.execute(input);
   }
 
