@@ -1,19 +1,6 @@
 import { Account } from "../../domain/entities/account";
 import { AccountRepository } from "../repositories/account-repository";
 
-export interface SignUpRequest {
-  name: string;
-  email: string;
-  cpf: string;
-  isDriver?: boolean;
-  isPassenger?: boolean;
-  carPlate?: string;
-}
-
-export interface SignUpResponse {
-  accountId: string;
-}
-
 export class SignUp {
   constructor(private readonly accountRepository: AccountRepository) {}
 
@@ -24,7 +11,7 @@ export class SignUp {
     carPlate,
     isDriver,
     isPassenger,
-  }: SignUpRequest): Promise<SignUpResponse> {
+  }: SignUpInput): Promise<SignUpOutput> {
     const accountWithSameEmail = await this.accountRepository.findByEmail(
       email
     );
@@ -40,6 +27,19 @@ export class SignUp {
     await this.accountRepository.create(account);
     return { accountId: account.id };
   }
+}
+
+export interface SignUpInput {
+  name: string;
+  email: string;
+  cpf: string;
+  isDriver?: boolean;
+  isPassenger?: boolean;
+  carPlate?: string;
+}
+
+export interface SignUpOutput {
+  accountId: string;
 }
 
 export class AccountAlreadyExistsError extends Error {

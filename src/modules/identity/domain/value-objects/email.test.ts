@@ -1,6 +1,7 @@
 import { Email } from "./email";
+import { invalidEmails, validEmails } from "./mocks/email.mock";
 
-test.each(["joao@domain.com", "joao@domain.com.br", "joao@domain.gov.br"])(
+test.each(validEmails)(
   "Deve testar um email válido: %s",
   function (value: string) {
     // act
@@ -11,7 +12,7 @@ test.each(["joao@domain.com", "joao@domain.com.br", "joao@domain.gov.br"])(
   }
 );
 
-test.each([undefined, null, "11111111111", "J", " ", "joao@"])(
+test.each(invalidEmails)(
   "Deve testar um email inválido: %s",
   function (value: any) {
     // act and assert

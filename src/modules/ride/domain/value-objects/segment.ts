@@ -3,6 +3,14 @@ import { Coord } from "./coord";
 export class Segment {
   constructor(private readonly from: Coord, private readonly to: Coord) {}
 
+  getFrom(): Coord {
+    return this.from;
+  }
+
+  getTo(): Coord {
+    return this.to;
+  }
+
   getDistance() {
     const earthRadius = 6371;
     const degreesToRadians = Math.PI / 180;
