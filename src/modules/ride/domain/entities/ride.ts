@@ -2,11 +2,18 @@ import crypto from "crypto";
 import { Coord } from "../value-objects/coord";
 import { Segment } from "../value-objects/segment";
 
+type RideStatus =
+  | "requested"
+  | "accepted"
+  | "in-progress"
+  | "canceled"
+  | "completed";
+
 export interface RideProps {
   id: string;
   passengerId: string;
   driverId?: string;
-  status: "requested" | "accepted" | "in-progress" | "canceled";
+  status: RideStatus;
   date: Date;
   segment: Segment;
 }
@@ -50,7 +57,7 @@ export class Ride {
     return this.props.segment.getTo().getLongitude();
   }
 
-  public static create(props: CreateProps): Ride {
+  static create(props: CreateProps): Ride {
     const segment = new Segment(
       new Coord(props.fromLat, props.fromLong),
       new Coord(props.toLat, props.toLong)
@@ -65,10 +72,37 @@ export class Ride {
       segment,
     });
   }
+
+  static restore(props: RestoreProps) {
+    const segment = new Segment(
+      new Coord(props.fromLat, props.fromLong),
+      new Coord(props.toLat, props.toLong)
+    );
+    return new Ride({
+      id: props.id,
+      passengerId: props.passengerId,
+      driverId: props.driverId,
+      status: props.status as RideStatus,
+      date: props.date,
+      segment,
+    });
+  }
 }
 
 interface CreateProps {
   passengerId: string;
+  driverId?: string;
+  fromLat: number;
+  fromLong: number;
+  toLat: number;
+  toLong: number;
+}
+
+interface RestoreProps {
+  id: string;
+  status: string;
+  passengerId: string;
+  date: Date;
   driverId?: string;
   fromLat: number;
   fromLong: number;
