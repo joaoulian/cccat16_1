@@ -26,10 +26,10 @@ describe("Accept Ride", () => {
     // assert
     const ride = await fixture.getRide({ rideId });
     expect(ride).not.toBeNull();
-    expect(ride?.status).toBe("accepted");
-    expect(ride?.driverId).toBe(driver.id);
-    expect(ride?.driverName).toBe(driver.name);
-    expect(ride?.driverEmail).toBe(driver.email);
+    expect(ride?.status).toEqual("accepted");
+    expect(ride?.driverId).toEqual(driver.id);
+    expect(ride?.driverName).toEqual(driver.name);
+    expect(ride?.driverEmail).toEqual(driver.email);
   });
 
   test("Deve falhar caso o driverId não seja o ID de um motorista", async function () {

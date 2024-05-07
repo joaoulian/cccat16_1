@@ -22,7 +22,7 @@ describe("POST /signup", () => {
     // act
     const output = await axios.post("http://localhost:3000/signup", input);
     // assert
-    expect(output.status).toBe(200);
+    expect(output.status).toEqual(200);
     expect(output.data).toHaveProperty("accountId");
     const account: any = await axios.get(
       `http://localhost:3000/account/${output.data.accountId}`
@@ -48,7 +48,7 @@ describe("POST /signup", () => {
     // act
     const output = await axios.post("http://localhost:3000/signup", input);
     // assert
-    expect(output.status).toBe(422);
+    expect(output.status).toEqual(422);
   });
 });
 
@@ -65,7 +65,7 @@ describe("GET /account/:accountId", () => {
       `http://localhost:3000/account/${account.accountId}`
     );
     // assert
-    expect(output.status).toBe(200);
+    expect(output.status).toEqual(200);
     expect(output.data).toEqual({
       id: account.accountId,
       isPassenger: true,
@@ -85,6 +85,6 @@ describe("GET /account/:accountId", () => {
       `http://localhost:3000/account/${accountId}`
     );
     // assert
-    expect(output.status).toBe(404);
+    expect(output.status).toEqual(404);
   });
 });

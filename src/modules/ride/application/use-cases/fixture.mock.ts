@@ -1,20 +1,27 @@
+import { AccountRepository } from "../../../identity/application/repositories/account-repository";
 import { Account } from "../../../identity/domain/entities/account";
 import { validCPF } from "../../../identity/domain/value-objects/mocks/cpf.mock";
 import { validEmail } from "../../../identity/domain/value-objects/mocks/email.mock";
 import { AccountRepositoryMemoryImpl } from "../../../identity/infra/repositories/account-repository-memory-impl";
+import { PositionRepositoryMemoryImpl } from "../../infra/repositories/position-repository-memory-impl";
 import { RideRepositoryMemoryImpl } from "../../infra/repositories/ride-repository-memory-impl";
+import { PositionRepository } from "../repositories/position-repository";
+import { RideRepository } from "../repositories/ride-repository";
 import { AcceptRide, AcceptRideInput } from "./accept-ride";
 import { GetRide, GetRideInput } from "./get-ride";
 import { RequestRide, RequestRideInput } from "./request-ride";
 import { StartRide, StartRideInput } from "./start-ride";
+import { UpdatePosition, UpdatePositionInput } from "./update-position";
 
 export class Fixture {
-  rideRepository: RideRepositoryMemoryImpl;
-  accountRepository: AccountRepositoryMemoryImpl;
+  readonly rideRepository: RideRepository;
+  readonly accountRepository: AccountRepository;
+  readonly positionRepository: PositionRepository;
 
   constructor() {
     this.rideRepository = new RideRepositoryMemoryImpl();
     this.accountRepository = new AccountRepositoryMemoryImpl();
+    this.positionRepository = new PositionRepositoryMemoryImpl();
   }
 
   requestRide(input: RequestRideInput) {
@@ -37,6 +44,14 @@ export class Fixture {
 
   startRide(input: StartRideInput) {
     const useCase = new StartRide(this.rideRepository);
+    return useCase.execute(input);
+  }
+
+  updatePosition(input: UpdatePositionInput) {
+    const useCase = new UpdatePosition(
+      this.rideRepository,
+      this.positionRepository
+    );
     return useCase.execute(input);
   }
 

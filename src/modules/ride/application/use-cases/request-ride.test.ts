@@ -22,14 +22,14 @@ describe("Request Ride", () => {
     // assert
     const ride = await fixture.getRide({ rideId: response.rideId });
     expect(ride).not.toBeNull();
-    expect(ride?.status).toBe("requested");
-    expect(ride?.fromLat).toBe(input.fromLat);
-    expect(ride?.fromLong).toBe(input.fromLong);
-    expect(ride?.toLat).toBe(input.toLat);
-    expect(ride?.toLong).toBe(input.toLong);
-    expect(ride?.passengerId).toBe(passenger.id);
-    expect(ride?.passengerName).toBe(passenger.name);
-    expect(ride?.passengerEmail).toBe(passenger.email);
+    expect(ride?.status).toEqual("requested");
+    expect(ride?.fromLat).toEqual(input.fromLat);
+    expect(ride?.fromLong).toEqual(input.fromLong);
+    expect(ride?.toLat).toEqual(input.toLat);
+    expect(ride?.toLong).toEqual(input.toLong);
+    expect(ride?.passengerId).toEqual(passenger.id);
+    expect(ride?.passengerName).toEqual(passenger.name);
+    expect(ride?.passengerEmail).toEqual(passenger.email);
     expect(ride?.driverId).toBeUndefined();
     expect(ride?.driverEmail).toBeUndefined();
     expect(ride?.driverName).toBeUndefined();

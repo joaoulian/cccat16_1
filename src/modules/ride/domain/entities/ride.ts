@@ -72,6 +72,10 @@ export class Ride {
     this.props.status = "in-progress";
   }
 
+  isInProgress(): boolean {
+    return this.props.status === "in-progress";
+  }
+
   static create(props: CreateProps): Ride {
     const segment = new Segment(
       new Coord(props.fromLat, props.fromLong),
