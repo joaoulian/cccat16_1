@@ -3,6 +3,7 @@ import { validCPF } from "../../../identity/domain/value-objects/mocks/cpf.mock"
 import { validEmail } from "../../../identity/domain/value-objects/mocks/email.mock";
 import { AccountRepositoryMemoryImpl } from "../../../identity/infra/repositories/account-repository-memory-impl";
 import { RideRepositoryMemoryImpl } from "../../infra/repositories/ride-repository-memory-impl";
+import { AcceptRide, AcceptRideInput } from "./accept-ride";
 import { GetRide, GetRideInput } from "./get-ride";
 import { RequestRide, RequestRideInput } from "./request-ride";
 
@@ -25,6 +26,11 @@ export class Fixture {
 
   getRide(input: GetRideInput) {
     const useCase = new GetRide(this.rideRepository, this.accountRepository);
+    return useCase.execute(input);
+  }
+
+  acceptRide(input: AcceptRideInput) {
+    const useCase = new AcceptRide(this.rideRepository, this.accountRepository);
     return useCase.execute(input);
   }
 

@@ -32,7 +32,7 @@ export class RequestRide {
       toLat,
       toLong,
     });
-    await this.rideRepository.create(ride);
+    await this.rideRepository.save(ride);
     return { rideId: ride.id };
   }
 }

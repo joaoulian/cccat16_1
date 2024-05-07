@@ -8,6 +8,7 @@ import { RideController } from "./modules/ride/infra/controllers/ride-controller
 import { RideRepositoryPostgresImpl } from "./modules/ride/infra/repositories/ride-repository-postgres-impl";
 import { GetRide } from "./modules/ride/application/use-cases/get-ride";
 import { RequestRide } from "./modules/ride/application/use-cases/request-ride";
+import { AcceptRide } from "./modules/ride/application/use-cases/accept-ride";
 
 const connection = pgp()("postgres://postgres:123456@localhost:5432/app");
 const httpServer = new HttpServerExpressAdapter();
@@ -19,7 +20,8 @@ const signUp = new SignUp(accountRepository);
 const getAccount = new GetAccount(accountRepository);
 const getRide = new GetRide(rideRepository, accountRepository);
 const requestRide = new RequestRide(rideRepository, accountRepository);
+const acceptRide = new AcceptRide(rideRepository, accountRepository);
 // Controllers
 new AccountController(httpServer, signUp, getAccount);
-new RideController(httpServer, getRide, requestRide);
+new RideController(httpServer, getRide, requestRide, acceptRide);
 httpServer.listen(3000);

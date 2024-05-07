@@ -57,6 +57,16 @@ export class Ride {
     return this.props.segment.getTo().getLongitude();
   }
 
+  isAccepted(): boolean {
+    return this.props.status === "accepted" && !!this.props.driverId;
+  }
+
+  accept(driverId: string) {
+    if (this.isAccepted()) throw new Error("Ride already accepted");
+    this.props.driverId = driverId;
+    this.props.status = "accepted";
+  }
+
   static create(props: CreateProps): Ride {
     const segment = new Segment(
       new Coord(props.fromLat, props.fromLong),

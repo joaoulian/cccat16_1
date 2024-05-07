@@ -6,7 +6,15 @@ import pg from "pg-promise/typescript/pg-subset";
 export class RideRepositoryPostgresImpl implements RideRepository {
   constructor(private readonly connection: pgp.IDatabase<{}, pg.IClient>) {}
 
-  async create(ride: Ride): Promise<void> {
+  async save(ride: Ride): Promise<void> {
+    const existent = await this.findById(ride.id);
+    if (existent) {
+      await this.connection.query(
+        "update cccat16.ride set status = $1, driver_id = $2 where ride_id = $3",
+        [ride.status, ride.driverId, ride.id]
+      );
+      return;
+    }
     await this.connection.query(
       "insert into cccat16.ride (ride_id, passenger_id, from_lat, from_long, to_lat, to_long, status, date) values ($1, $2, $3, $4, $5, $6, $7, $8)",
       [
@@ -46,6 +54,14 @@ export class RideRepositoryPostgresImpl implements RideRepository {
     const [rideData] = await this.connection.query(
       "select * from cccat16.ride where passenger_id = $1 and status <> 'canceled' or status <> 'completed'",
       [passengerId]
+    );
+    return !!rideData;
+  }
+
+  async hasActiveRideByDriverId(driverId: string): Promise<boolean> {
+    const [rideData] = await this.connection.query(
+      "select * from cccat16.ride where driver_id = $1 and status <> 'canceled' or status <> 'completed'",
+      [driverId]
     );
     return !!rideData;
   }

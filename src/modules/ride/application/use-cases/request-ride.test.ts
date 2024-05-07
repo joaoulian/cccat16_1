@@ -1,6 +1,6 @@
 import { Fixture } from "./fixture.mock";
 
-describe("request-ride", () => {
+describe("Request Ride", () => {
   let fixture: Fixture;
 
   beforeEach(() => {
