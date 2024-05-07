@@ -35,7 +35,7 @@ export class SignUp {
       cpf,
       isDriver: !!isDriver,
       isPassenger: !!isPassenger,
-      carPlate: carPlate ?? null,
+      carPlate,
     });
     await this.accountRepository.create(account);
     return { accountId: account.id };

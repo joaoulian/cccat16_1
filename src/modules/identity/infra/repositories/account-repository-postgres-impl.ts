@@ -7,7 +7,7 @@ import { AccountMapper } from "./account-mapper";
 export class AccountRepositoryPostgresImpl implements AccountRepository {
   constructor(private readonly connection: pgp.IDatabase<{}, pg.IClient>) {}
 
-  async create(account: Account) {
+  async create(account: Account): Promise<void> {
     await this.connection.query(
       "insert into cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)",
       [

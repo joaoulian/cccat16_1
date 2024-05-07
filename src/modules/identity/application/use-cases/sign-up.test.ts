@@ -9,12 +9,10 @@ import {
 } from "./account.mock";
 import { AccountAlreadyExistsError, SignUp } from "./sign-up";
 import { AccountRepository } from "../repositories/account-repository";
-import {
-  InvalidCPFError,
-  InvalidCarPlateError,
-  InvalidEmailError,
-  InvalidNameError,
-} from "../../domain/account";
+import { InvalidNameError } from "../../domain/value-objects/name";
+import { InvalidEmailError } from "../../domain/value-objects/email";
+import { InvalidCPFError } from "../../domain/value-objects/cpf";
+import { InvalidCarPlateError } from "../../domain/value-objects/car-plate";
 
 let useCase: SignUp;
 let accountRepository: AccountRepository;
