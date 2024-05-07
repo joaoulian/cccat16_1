@@ -1,5 +1,5 @@
 import { AccountRepository } from "../../application/repositories/account-repository";
-import { Account } from "../../domain/account";
+import { Account } from "../../domain/entities/account";
 import { AccountMapper } from "./account-mapper";
 
 export class AccountRepositoryMemoryImpl implements AccountRepository {

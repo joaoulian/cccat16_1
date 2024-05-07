@@ -1,4 +1,4 @@
-import { Account } from "../../domain/account";
+import { Account } from "../../domain/entities/account";
 import { AccountRepository } from "../repositories/account-repository";
 
 export interface SignUpRequest {

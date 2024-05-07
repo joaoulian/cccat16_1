@@ -1,8 +1,8 @@
 import crypto from "crypto";
-import { CarPlate } from "./value-objects/car-plate";
-import { CPF } from "./value-objects/cpf";
-import { Email } from "./value-objects/email";
-import { Name } from "./value-objects/name";
+import { CarPlate } from "../value-objects/car-plate";
+import { CPF } from "../value-objects/cpf";
+import { Email } from "../value-objects/email";
+import { Name } from "../value-objects/name";
 
 export interface AccountProps {
   id: string;

@@ -1,4 +1,4 @@
-import { Account } from "../../domain/account";
+import { Account } from "../../domain/entities/account";
 
 export class AccountMapper {
   static toDomain(account: any): Account {
