@@ -1,11 +1,13 @@
 import DistanceCalculator from "../../domain/services/distance-calculator";
+import { PaymentGateway } from "../gateway/payment-gateway";
 import { PositionRepository } from "../repositories/position-repository";
 import { RideRepository } from "../repositories/ride-repository";
 
 export class FinishRide {
   constructor(
     private rideRepository: RideRepository,
-    private positionRepository: PositionRepository
+    private positionRepository: PositionRepository,
+    private paymentGateway: PaymentGateway
   ) {}
 
   async execute({ rideId }: FinishRideInput): Promise<void> {
@@ -17,6 +19,9 @@ export class FinishRide {
     const distance = DistanceCalculator.calculate(positions);
     ride.finish(distance);
     await this.rideRepository.save(ride);
+    if (!ride.fare)
+      throw new Error("Cannot process payment for a ride without fare");
+    await this.paymentGateway.processPayment(ride.id, ride.fare);
   }
 }
 

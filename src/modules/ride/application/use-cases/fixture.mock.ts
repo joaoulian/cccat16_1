@@ -3,8 +3,10 @@ import { Account } from "../../../identity/domain/entities/account";
 import { validCPF } from "../../../identity/domain/value-objects/mocks/cpf.mock";
 import { validEmail } from "../../../identity/domain/value-objects/mocks/email.mock";
 import { AccountRepositoryMemoryImpl } from "../../../identity/infra/repositories/account-repository-memory-impl";
+import { PaymentGatewayMemoryImpl } from "../../infra/gateways/payment-gateway-memory-impl";
 import { PositionRepositoryMemoryImpl } from "../../infra/repositories/position-repository-memory-impl";
 import { RideRepositoryMemoryImpl } from "../../infra/repositories/ride-repository-memory-impl";
+import { PaymentGateway } from "../gateway/payment-gateway";
 import { PositionRepository } from "../repositories/position-repository";
 import { RideRepository } from "../repositories/ride-repository";
 import { AcceptRide, AcceptRideInput } from "./accept-ride";
@@ -18,11 +20,19 @@ export class Fixture {
   readonly rideRepository: RideRepository;
   readonly accountRepository: AccountRepository;
   readonly positionRepository: PositionRepository;
+  readonly paymentGateway: PaymentGateway;
+
+  readonly processPaymentSpy: jest.SpyInstance<
+    Promise<{ status: "success" | "failed" }>,
+    [rideId: string, amount: number]
+  >;
 
   constructor() {
     this.rideRepository = new RideRepositoryMemoryImpl();
     this.accountRepository = new AccountRepositoryMemoryImpl();
     this.positionRepository = new PositionRepositoryMemoryImpl();
+    this.paymentGateway = new PaymentGatewayMemoryImpl();
+    this.processPaymentSpy = jest.spyOn(this.paymentGateway, "processPayment");
   }
 
   requestRide(input: RequestRideInput) {
@@ -59,7 +69,8 @@ export class Fixture {
   finishRide(input: FinishRideInput) {
     const useCase = new FinishRide(
       this.rideRepository,
-      this.positionRepository
+      this.positionRepository,
+      this.paymentGateway
     );
     return useCase.execute(input);
   }
