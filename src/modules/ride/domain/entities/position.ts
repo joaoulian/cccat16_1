@@ -27,6 +27,10 @@ export class Position {
     return this.props.coord.getLongitude();
   }
 
+  get coord(): Coord {
+    return this.props.coord;
+  }
+
   get date(): Date {
     return this.props.date;
   }

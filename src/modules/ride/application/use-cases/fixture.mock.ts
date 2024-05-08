@@ -8,6 +8,7 @@ import { RideRepositoryMemoryImpl } from "../../infra/repositories/ride-reposito
 import { PositionRepository } from "../repositories/position-repository";
 import { RideRepository } from "../repositories/ride-repository";
 import { AcceptRide, AcceptRideInput } from "./accept-ride";
+import { FinishRide, FinishRideInput } from "./finish-ride";
 import { GetRide, GetRideInput } from "./get-ride";
 import { RequestRide, RequestRideInput } from "./request-ride";
 import { StartRide, StartRideInput } from "./start-ride";
@@ -49,6 +50,14 @@ export class Fixture {
 
   updatePosition(input: UpdatePositionInput) {
     const useCase = new UpdatePosition(
+      this.rideRepository,
+      this.positionRepository
+    );
+    return useCase.execute(input);
+  }
+
+  finishRide(input: FinishRideInput) {
+    const useCase = new FinishRide(
       this.rideRepository,
       this.positionRepository
     );

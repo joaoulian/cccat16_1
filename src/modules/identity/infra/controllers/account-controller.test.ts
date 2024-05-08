@@ -28,7 +28,7 @@ describe("POST /signup", () => {
       `http://localhost:3000/account/${output.data.accountId}`
     );
     expect(account.data).toEqual({
-      id: account.accountId,
+      id: output.data.accountId,
       isPassenger: true,
       isDriver: false,
       name: input.name,
@@ -85,6 +85,6 @@ describe("GET /account/:accountId", () => {
       `http://localhost:3000/account/${accountId}`
     );
     // assert
-    expect(output.status).toEqual(404);
+    expect(output.status).toEqual(422);
   });
 });

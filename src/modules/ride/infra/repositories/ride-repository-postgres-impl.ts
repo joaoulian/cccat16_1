@@ -46,6 +46,8 @@ export class RideRepositoryPostgresImpl implements RideRepository {
       toLong: parseFloat(rideData.to_long),
       status: rideData.status,
       date: rideData.date,
+      distance: rideData.distance,
+      fare: rideData.fare,
     });
     return ride;
   }

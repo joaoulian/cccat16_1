@@ -16,6 +16,8 @@ export interface RideProps {
   status: RideStatus;
   date: Date;
   segment: Segment;
+  distance?: number;
+  fare?: number;
 }
 
 export class Ride {
@@ -57,6 +59,14 @@ export class Ride {
     return this.props.segment.getTo().getLongitude();
   }
 
+  get distance(): number | undefined {
+    return this.props.distance;
+  }
+
+  get fare(): number | undefined {
+    return this.props.fare;
+  }
+
   isAccepted(): boolean {
     return this.props.status === "accepted" && !!this.props.driverId;
   }
@@ -70,6 +80,13 @@ export class Ride {
   start() {
     if (!this.isAccepted()) throw new Error("Ride not accepted");
     this.props.status = "in-progress";
+  }
+
+  finish(distance: number) {
+    if (!this.isInProgress()) throw new Error("Ride not in progress");
+    this.props.distance = distance;
+    this.props.fare = distance * 2.1;
+    this.props.status = "completed";
   }
 
   isInProgress(): boolean {
@@ -104,6 +121,8 @@ export class Ride {
       status: props.status as RideStatus,
       date: props.date,
       segment,
+      distance: props.distance,
+      fare: props.fare,
     });
   }
 }
@@ -127,4 +146,6 @@ interface RestoreProps {
   fromLong: number;
   toLat: number;
   toLong: number;
+  fare?: number;
+  distance?: number;
 }

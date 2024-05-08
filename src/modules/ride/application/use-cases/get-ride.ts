@@ -32,6 +32,8 @@ export class GetRide {
       driverId: driver?.id,
       driverName: driver?.name,
       driverEmail: driver?.email,
+      fare: ride.fare,
+      distance: ride.distance,
     };
   }
 }
@@ -53,4 +55,6 @@ export interface GetRideOutput {
   driverId?: string;
   driverName?: string;
   driverEmail?: string;
+  fare?: number;
+  distance?: number;
 }
