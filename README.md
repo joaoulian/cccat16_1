@@ -1,8 +1,6 @@
-Este conteúdo é parte do curso Clean Code e Clean Architecture da Branas.io
-Para mais informações acesse:
-https://branas.io
+Taxi service project with educational purpose developed during the 16 class - Clean Architecture course from Rodrigo Branas
 
-## Requisitos
+## Requirements
 
 - nvm
 - node (20.9.0)
@@ -12,39 +10,39 @@ https://branas.io
 
 ## Setup
 
-- Use a versão correta do node
+- Apply node version
 
 ```
 nvm use
 ```
 
-- Instale os pacotes
+- Install the packages
 
 ```
 yarn install
 ```
 
-## Rodar os testes
+## Run the tests
 
-- Inicie o docker-compose contendo o banco de dados (Postgres)
+- Initialize docker-compose containing the database (Postgres)
 
 ```
 docker-compose up -d
 ```
 
-- Inicie a aplicação (o servidor irá rodar na porta 3000)
+- Initialize the server (listening port 3000)
 
 ```
 npm run start:dev
 ```
 
-- Rode os testes
+- Run all the tests
 
 ```
 npm run test
 ```
 
-- Encerrando os processos
+- Killing the processes
 
 ```
 docker-compose down
